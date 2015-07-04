@@ -1,0 +1,43 @@
+{
+  "name": "kona-mongo",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbielick/kona-redis.git"
+  },
+  "description": "mongo mixin for the kona application framework",
+  "main": "index.js",
+  "keywords": [
+    "comongo",
+    "mongo",
+    "kona",
+    "koa",
+    "generators",
+    "async"
+  ],
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": ">=0.11.0"
+  },
+  "engineStrict": true,
+  "author": {
+    "name": "Josh Bielick",
+    "email": "jbielick@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "co-mongo": "0.0.2",
+    "delegates": "^0.1.0"
+  },
+  "gitHead": "3cb509d1b8e4620be2ccaa2ab6e6e08e3aa0b3cf",
+  "bugs": {
+    "url": "https://github.com/jbielick/kona-redis/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/jbielick/kona-redis",
+  "_id": "kona-redis@0.2.0",
+  "_shasum": "8912ab7cc0af70e18c7ab39f2128e5f00b25a019",
+  "_from": "kona-redis@*"
+}
