@@ -1,31 +1,29 @@
 var comongo = require('co-mongo');
 var delegate = require('delegates');
-var BaseController = require('kona/lib/controller/base');
+var BaseController = require('kona/lib/controller/abstract');
 var client;
 
-module.exports = {
+module.exports = function(app) {
 
-  required: function(app) {
+  app.on('hook:initialize', function* () {
 
-    app.on('hook:initialize', this.initialize);
-    app.on('hook:shutdown', this.shutdown);
+    if (Object.prototype.toString.call(this.config.mongo) === '[object Object]') {
+      // options form e.g. {host: , port: }
+      comongo.configure(this.config.mongo);
+      client = yield comongo.get();
+    } else {
+      // string connection form ex: 'mongodb://127.0.0.1:27017/test'
+      client = yield comongo.connect(this.config.mongo);
+    }
 
-  },
-
-  initialize: function* (app) {
-    var host;
-    var connectionString;
-
-    host = (this.config.mongo && this.config.mongo.host) || 'localhost';
-    connectionString = 'mongodb://' + host + '/' + this.config.mongo.database;
-
-    this.mongo = client = yield comongo.connect(connectionString);
+    // expose on the app object
+    this.mongo = client;
 
     delegate(BaseController.prototype, 'app').access('mongo');
-  },
+  });
 
-  shutdown: function* () {
+  app.on('hook:shutdown', function* () {
     client.end();
-  }
+  });
 
 };
