@@ -1,29 +1,24 @@
-var comongo = require('co-mongo');
+var MongoClient = require('thunkify-mongodb').MongoClient;
+var mongodb = require('mongodb');
 var delegate = require('delegates');
 var BaseController = require('kona/lib/controller/abstract');
-var client;
 
 module.exports = function(app) {
 
+  var db;
+
   app.on('hook:initialize', function* () {
 
-    if (Object.prototype.toString.call(this.config.mongo) === '[object Object]') {
-      // options form e.g. {host: , port: }
-      comongo.configure(this.config.mongo);
-      client = yield comongo.get();
-    } else {
-      // string connection form ex: 'mongodb://127.0.0.1:27017/test'
-      client = yield comongo.connect(this.config.mongo);
-    }
+    var client = new MongoClient(new mongodb.MongoClient());
 
     // expose on the app object
-    this.mongo = client;
+    this.mongo = db = yield client.connect(this.config.mongo);
 
-    delegate(BaseController.prototype, 'app').access('mongo');
+    delegate(BaseController.prototype, 'app').getter('mongo');
   });
 
   app.on('hook:shutdown', function* () {
-    client.end();
+    yield db.close();
   });
 
 };

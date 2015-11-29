@@ -4,23 +4,14 @@ to the abstract controller prototype so you can do mongo queries from controller
 Example config in `config/application.js`:
 
 ```js
-  config.mongo = {
-    host: '127.0.0.1',
-    port: 27017,
-    name: 'mydb',
-    pool: 10,
-    collections: ['users', 'products', 'orders']
-    auth: {
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD
-    }
-  };
+  config.mongo = 'mongodb://localhost:27017/my_app_database';
 ```
 
-These details will be passed straight to [`co-mongo`](https://github.com/thomseddon/co-mongo).
+These details will be passed straight to the mongo native client.
 
 In your controller, you now have a mongo connection checked out from the pool:
 
 ```js
-var user = yield this.users.findOne({name: /creed/});
+var users = yield this.mongo.collection('users');
+var user = yield users.findOne({name: /creed/});
 ```
