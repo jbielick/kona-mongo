@@ -31,7 +31,7 @@
     "co-mongo": "0.0.2",
     "delegates": "^0.1.0",
     "mongodb": "2.0.49",
-    "thunkify-mongodb": "git://github.com/jbielick/node-thunkify-mongodb.git#16f4c6902995353d0da7cc3cdb9f3c56c4c3a7c5"
+    "thunkify-mongodb": "git://github.com/jbielick/node-thunkify-mongodb.git#v1.0.0"
   },
   "bugs": {
     "url": "https://github.com/jbielick/kona-mongo/issues"
